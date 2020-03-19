@@ -10,6 +10,10 @@ public class PaymentCalculator {
     }
 
     private void validateInputs(String startTime, String endTime, String family) {
+        checkIfInputsAreBlankOrNot(startTime, endTime, family);
+    }
+
+    private void checkIfInputsAreBlankOrNot(String startTime, String endTime, String family) {
         if(StringUtils.isBlank(startTime))
             System.out.println("Start time cannot be blank!");
         if(StringUtils.isBlank(endTime))
