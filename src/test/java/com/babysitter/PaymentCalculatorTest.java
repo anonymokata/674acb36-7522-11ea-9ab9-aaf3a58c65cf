@@ -17,13 +17,13 @@ public class PaymentCalculatorTest {
     }
 
     @Test
-    public void whenCalculateIsCalledTotalPayIsZero() throws Exception {
+    public void whenCalculateIsCalledThenTotalPayIsZero() throws Exception {
         PaymentCalculator paymentCalculator = new PaymentCalculator();
         Assert.assertEquals(0, paymentCalculator.calculate("18:00", "19:00", "A"), 0.01);
     }
 
     @Test
-    public void whenCalculateIsCalledWithEmptyParametersAnExceptionIsThrown() throws Exception {
+    public void whenCalculateIsCalledWithABlankStartTimeThenAnErrorMessageIsPrinted() throws Exception {
         PaymentCalculator paymentCalculator = new PaymentCalculator();
         paymentCalculator.calculate("", "19:00", "A");
         Assert.assertEquals("Start time cannot be blank!", outputStream.toString().trim());
