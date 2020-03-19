@@ -28,4 +28,12 @@ public class PaymentCalculatorTest {
         paymentCalculator.calculate("", "19:00", "A");
         Assert.assertEquals("Start time cannot be blank!", outputStream.toString().trim());
     }
+
+    @Test
+    public void whenCalculateIsCalledWithABlankEndTimeThenAnErrorMessageIsPrinted() throws Exception {
+        PaymentCalculator paymentCalculator = new PaymentCalculator();
+        paymentCalculator.calculate("18:00", "", "A");
+        Assert.assertEquals("End time cannot be blank!", outputStream.toString().trim());
+    }
+
 }

@@ -7,6 +7,8 @@ public class PaymentCalculator {
     public Integer calculate(String startTime, String endTime, String family) {
         if(StringUtils.isBlank(startTime))
             System.out.println("Start time cannot be blank!");
+        if(StringUtils.isBlank(endTime))
+            System.out.println("End time cannot be blank!");
         return 0;
     }
 }
