@@ -9,6 +9,8 @@ public class PaymentCalculator {
             System.out.println("Start time cannot be blank!");
         if(StringUtils.isBlank(endTime))
             System.out.println("End time cannot be blank!");
+        if(StringUtils.isBlank(family))
+            System.out.println("Family cannot be blank!");
         return 0;
     }
 }

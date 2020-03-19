@@ -36,4 +36,11 @@ public class PaymentCalculatorTest {
         Assert.assertEquals("End time cannot be blank!", outputStream.toString().trim());
     }
 
+    @Test
+    public void whenCalculateIsCalledWithABlankFamilyThenAnErrorMessageIsPrinted() throws Exception {
+        PaymentCalculator paymentCalculator = new PaymentCalculator();
+        paymentCalculator.calculate("18:00", "19:00", "");
+        Assert.assertEquals("Family cannot be blank!", outputStream.toString().trim());
+    }
+
 }
