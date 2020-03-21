@@ -107,4 +107,27 @@ public class PaymentCalculatorTest {
         paymentCalculator.calculate("2020-03-21 17:00", "2020-03-21 17:00", "A");
         Assert.assertEquals("", outputStream.toString().trim());
     }
+
+    @Test
+    public void whenCalculateIsCalledWhereEndTimeIsAfterFourAMThenAnErrorMessageIsPrinted() throws InvalidTimeFormatException {
+        PaymentCalculator paymentCalculator = new PaymentCalculator();
+        paymentCalculator.calculate("2020-03-21 17:00", "2020-03-22 04:01", "A");
+        Assert.assertEquals("The end time cannot be past 4AM and the end date either has to be on the same or the next day of the start date!", outputStream.toString().trim());
+    }
+
+    @Test
+    public void whenCalculateIsCalledWhereEndTimeIsBeforeFourAMButAFewDaysAfterTheStartDateThenAnErrorMessageIsPrinted() throws InvalidTimeFormatException {
+        PaymentCalculator paymentCalculator = new PaymentCalculator();
+        paymentCalculator.calculate("2020-03-21 17:00", "2020-03-23 03:59", "A");
+        Assert.assertEquals("The end time cannot be past 4AM and the end date either has to be on the same or the next day of the start date!", outputStream.toString().trim());
+    }
+
+    @Test
+    public void whenCalculateIsCalledWhereStartAndEndTimesAreWithinWorkableHoursThenThereIsNoErrorMessagePrinted() throws InvalidTimeFormatException {
+        PaymentCalculator paymentCalculator = new PaymentCalculator();
+        paymentCalculator.calculate("2020-03-21 17:00", "2020-03-22 04:00", "A");
+        Assert.assertEquals("", outputStream.toString().trim());
+    }
+
+
 }
