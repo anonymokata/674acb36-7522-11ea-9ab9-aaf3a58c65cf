@@ -5,7 +5,6 @@ import org.apache.commons.lang3.StringUtils;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.time.format.ResolverStyle;
 
 public class PaymentCalculator {
 
@@ -19,15 +18,15 @@ public class PaymentCalculator {
 
     private Boolean checkIfInputsAreBlankOrNot(String startTime, String endTime, String family) {
         Boolean areInputsValid = Boolean.TRUE;
-        if(StringUtils.isBlank(startTime)) {
+        if (StringUtils.isBlank(startTime)) {
             System.out.println("Start time cannot be blank!");
             areInputsValid = Boolean.FALSE;
         }
-        if(StringUtils.isBlank(endTime)) {
+        if (StringUtils.isBlank(endTime)) {
             System.out.println("End time cannot be blank!");
             areInputsValid = Boolean.FALSE;
         }
-        if(StringUtils.isBlank(family)) {
+        if (StringUtils.isBlank(family)) {
             System.out.println("Family cannot be blank!");
             areInputsValid = Boolean.FALSE;
         }

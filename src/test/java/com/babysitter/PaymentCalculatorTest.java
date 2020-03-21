@@ -17,7 +17,7 @@ public class PaymentCalculatorTest {
     }
 
     @Test
-    public void whenCalculateIsCalledThenTotalPayIsZero()  {
+    public void whenCalculateIsCalledThenTotalPayIsZero() {
         PaymentCalculator paymentCalculator = new PaymentCalculator();
         Assert.assertEquals(0, paymentCalculator.calculate("2020-03-21 18:00", "2020-03-21 19:00", "A"), 0.01);
     }
