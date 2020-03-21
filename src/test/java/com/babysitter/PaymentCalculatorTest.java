@@ -93,4 +93,18 @@ public class PaymentCalculatorTest {
         paymentCalculator.calculate("2020-03-21 17:00", "2020-03-21 17:00", "A");
         Assert.assertEquals("", outputStream.toString().trim());
     }
+
+    @Test
+    public void whenCalculateIsCalledWhereStartTimeIsNotWithinWorkableHoursThenAnErrorMessageIsPrinted() throws InvalidTimeFormatException {
+        PaymentCalculator paymentCalculator = new PaymentCalculator();
+        paymentCalculator.calculate("2020-03-21 16:59", "2020-03-21 17:00", "A");
+        Assert.assertEquals("The start time should not be earlier than 5:00PM", outputStream.toString().trim());
+    }
+
+    @Test
+    public void whenCalculateIsCalledWhereStartTimeIsWithinWorkableHoursThenThereIsNoErrorMessagePrinted() throws InvalidTimeFormatException {
+        PaymentCalculator paymentCalculator = new PaymentCalculator();
+        paymentCalculator.calculate("2020-03-21 17:00", "2020-03-21 17:00", "A");
+        Assert.assertEquals("", outputStream.toString().trim());
+    }
 }

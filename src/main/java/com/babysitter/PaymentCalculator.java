@@ -64,11 +64,37 @@ public class PaymentCalculator {
 
     private Boolean areTimesValid(LocalDateTime startDateTime, LocalDateTime endDateTime) {
         Boolean areTimesValid = Boolean.TRUE;
-        if(endDateTime.isBefore(startDateTime)) {
-            System.out.println("End time cannot be before the start time!");
+        if (isEndTimeBeforeStartTime(startDateTime, endDateTime) || areTimesNotWithinWorkableHours(startDateTime, endDateTime)) {
             areTimesValid = Boolean.FALSE;
         }
         return areTimesValid;
+    }
+
+    private Boolean isEndTimeBeforeStartTime(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        Boolean isEndTimeBeforeStartTime = Boolean.FALSE;
+        if (endDateTime.isBefore(startDateTime)) {
+            System.out.println("End time cannot be before the start time!");
+            isEndTimeBeforeStartTime = Boolean.TRUE;
+        }
+        return isEndTimeBeforeStartTime;
+    }
+
+    private Boolean areTimesNotWithinWorkableHours(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        Boolean areTimesNotWithinWorkableHours = Boolean.FALSE;
+
+        if (isStartTimeNotWithinWorkableHours(startDateTime)) {
+            areTimesNotWithinWorkableHours = Boolean.TRUE;
+        }
+        return areTimesNotWithinWorkableHours;
+    }
+
+    private Boolean isStartTimeNotWithinWorkableHours(LocalDateTime startDateTime) {
+        Boolean isStartTimeNotWithinWorkableHours = Boolean.FALSE;
+        if(startDateTime.getHour() < 17) {
+            System.out.println("The start time should not be earlier than 5:00PM");
+            isStartTimeNotWithinWorkableHours = Boolean.TRUE;
+        }
+        return isStartTimeNotWithinWorkableHours;
     }
 
     private LocalDateTime convertStringIntoLocalDateTime(String date) throws InvalidTimeFormatException {
