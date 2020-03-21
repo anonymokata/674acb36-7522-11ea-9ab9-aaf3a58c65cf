@@ -37,13 +37,12 @@ public class PaymentCalculator {
     private LocalDateTime convertStringIntoLocalDateTime(String date) {
         LocalDateTime dateTime = null;
         DateTimeFormatter formatter = DateTimeFormatter
-                .ofPattern("HH:mm")
-                .withResolverStyle(ResolverStyle.STRICT);
+                .ofPattern("yyyy-MM-dd HH:mm");
 
         try {
             dateTime = LocalDateTime.parse(date, formatter);
         } catch (DateTimeParseException e) {
-            System.out.println("The start time or end time is in an invalid format! Please use the format: \"HH:mm\"");
+            System.out.println("The start time or end time is in an invalid format! Please use the format: \"yyyy-MM-dd HH:mm\" and please ensure that the times are correct");
         }
         return dateTime;
     }
