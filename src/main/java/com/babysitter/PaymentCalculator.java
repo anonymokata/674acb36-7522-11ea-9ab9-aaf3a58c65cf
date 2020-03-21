@@ -1,5 +1,6 @@
 package com.babysitter;
 
+import com.babysitter.enums.FamilyEnum;
 import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalDateTime;
@@ -10,27 +11,52 @@ public class PaymentCalculator {
 
     public Integer calculate(String startTime, String endTime, String family) {
         LocalDateTime startDateTime;
-        if (checkIfInputsAreBlankOrNot(startTime, endTime, family)) {
+
+        if (validateTimesAndFamily(startTime, endTime, family)) {
             startDateTime = convertStringIntoLocalDateTime(startTime);
         }
         return 0;
     }
 
-    private Boolean checkIfInputsAreBlankOrNot(String startTime, String endTime, String family) {
+    private Boolean validateTimesAndFamily(String startTime, String endTime, String family) {
         Boolean areInputsValid = Boolean.TRUE;
-        if (StringUtils.isBlank(startTime)) {
-            System.out.println("Start time cannot be blank!");
-            areInputsValid = Boolean.FALSE;
-        }
-        if (StringUtils.isBlank(endTime)) {
-            System.out.println("End time cannot be blank!");
-            areInputsValid = Boolean.FALSE;
-        }
-        if (StringUtils.isBlank(family)) {
-            System.out.println("Family cannot be blank!");
+
+        if (!areAllInputsNotBlank(startTime, endTime, family) || !isFamilyValid(family)) {
             areInputsValid = Boolean.FALSE;
         }
         return areInputsValid;
+    }
+
+    private Boolean areAllInputsNotBlank(String startTime, String endTime, String family) {
+        Boolean areAllInputsNotBlank = Boolean.TRUE;
+
+        if (StringUtils.isBlank(startTime)) {
+            System.out.println("Start time cannot be blank!");
+            areAllInputsNotBlank = Boolean.FALSE;
+        }
+        if (StringUtils.isBlank(endTime)) {
+            System.out.println("End time cannot be blank!");
+            areAllInputsNotBlank = Boolean.FALSE;
+        }
+        if (StringUtils.isBlank(family)) {
+            System.out.println("Family cannot be blank!");
+            areAllInputsNotBlank = Boolean.FALSE;
+        }
+        return areAllInputsNotBlank;
+    }
+
+    private Boolean isFamilyValid(String family) {
+        Boolean isFamilyValid = Boolean.FALSE;
+
+        for (FamilyEnum familyName : FamilyEnum.values()) {
+            if (familyName.toString().equals(family)) {
+                isFamilyValid = Boolean.TRUE;
+            }
+        }
+        if (!isFamilyValid) {
+            System.out.println("The family is not valid!");
+        }
+        return isFamilyValid;
     }
 
     private LocalDateTime convertStringIntoLocalDateTime(String date) {

@@ -57,4 +57,27 @@ public class PaymentCalculatorTest {
         paymentCalculator.calculate("2020-03-21 17:00", "2020-03-21 04:00", "A");
         Assert.assertEquals("", outputStream.toString().trim());
     }
+
+    @Test
+    public void whenCalculateIsCalledAndFamilyIsInALowerCaseFormatThenAnErrorMessageIsPrinted() {
+        PaymentCalculator paymentCalculator = new PaymentCalculator();
+        paymentCalculator.calculate("2020-03-21 17:00", "2020-03-21 04:00", "a");
+        Assert.assertEquals("The family is not valid!", outputStream.toString().trim());
+    }
+
+    @Test
+    public void whenCalculateIsCalledAndFamilyIsNotValidThenAnErrorMessageIsPrinted() {
+        PaymentCalculator paymentCalculator = new PaymentCalculator();
+        paymentCalculator.calculate("2020-03-21 17:00", "2020-03-21 04:00", "E");
+        Assert.assertEquals("The family is not valid!", outputStream.toString().trim());
+    }
+
+    @Test
+    public void whenCalculateIsCalledAndFamilyIsValidThenThereIsNoError() {
+        PaymentCalculator paymentCalculator = new PaymentCalculator();
+        paymentCalculator.calculate("2020-03-21 17:00", "2020-03-21 04:00", "A");
+        Assert.assertEquals("", outputStream.toString().trim());
+    }
+
+
 }
