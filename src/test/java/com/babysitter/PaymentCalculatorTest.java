@@ -17,7 +17,7 @@ public class PaymentCalculatorTest {
     }
 
     @Test
-    public void whenCalculateIsCalledThenTotalPayIsZero() {
+    public void whenCalculateIsCalledThenTotalPayIsZero()  {
         PaymentCalculator paymentCalculator = new PaymentCalculator();
         Assert.assertEquals(0, paymentCalculator.calculate("18:00", "19:00", "A"), 0.01);
     }
@@ -43,4 +43,11 @@ public class PaymentCalculatorTest {
         Assert.assertEquals("Family cannot be blank!", outputStream.toString().trim());
     }
 
+    @Test
+    public void whenCalculateIsCalledWithAnInvalidStartTimeThenAnErrorMessageIsPrinted() {
+        PaymentCalculator paymentCalculator = new PaymentCalculator();
+        paymentCalculator.calculate("25:00", "19:00", "A");
+        Assert.assertEquals("The start time or end time is in an invalid format! Please use the format: \"HH:mm\"", outputStream.toString().trim());
+
+    }
 }
