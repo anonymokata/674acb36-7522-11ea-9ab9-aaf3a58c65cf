@@ -1,7 +1,6 @@
 package com.babysitter.utils;
 
 import com.babysitter.exception.InvalidTimeFormatException;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,11 +18,11 @@ public class TimeAndPayUtilTest {
     }
 
     @Test
-    public void whenGetHoursIsCalledThenZeroIsReturned() throws InvalidTimeFormatException {
+    public void whenGetHoursIsCalledThenTheTotalNumberOfHoursIsCalculatedAndReturned() throws InvalidTimeFormatException {
         LocalDateTime startDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-21 18:00");
         LocalDateTime endDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-21 19:00");
-        Integer result = timeAndPayUtil.getHours(startDateTime, endDateTime);
-        assertEquals(0, result, 0.01);
+        Long result = timeAndPayUtil.getHours(startDateTime, endDateTime);
+        assertEquals(1, result, 0.01);
     }
 
 }
