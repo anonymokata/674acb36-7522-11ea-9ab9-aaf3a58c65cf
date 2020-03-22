@@ -2,6 +2,7 @@ package com.babysitter;
 
 import com.babysitter.enums.FamilyEnum;
 import com.babysitter.exception.InvalidTimeFormatException;
+import com.babysitter.utils.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalDate;
@@ -17,8 +18,8 @@ public class PaymentCalculator {
 
     public Integer calculate(String startTime, String endTime, String family) throws InvalidTimeFormatException {
         if (validateTimesAndFamily(startTime, endTime, family)) {
-            LocalDateTime startDateTime = convertStringIntoLocalDateTime(startTime);
-            LocalDateTime endDateTime = convertStringIntoLocalDateTime(endTime);
+            LocalDateTime startDateTime = DateUtil.convertStringIntoLocalDateTime(startTime);
+            LocalDateTime endDateTime = DateUtil.convertStringIntoLocalDateTime(endTime);
             if (areTimesValid(startDateTime, endDateTime)) {
                 Integer totalPay = calculateTotalPay(startDateTime, endDateTime, family);
             }
@@ -130,17 +131,5 @@ public class PaymentCalculator {
         return isEndTimeNotWithinWorkableHours;
     }
 
-    private LocalDateTime convertStringIntoLocalDateTime(String date) throws InvalidTimeFormatException {
-        LocalDateTime dateTime;
-        DateTimeFormatter formatter = DateTimeFormatter
-                .ofPattern("yyyy-MM-dd HH:mm");
 
-        try {
-            dateTime = LocalDateTime.parse(date, formatter);
-        } catch (DateTimeParseException e) {
-            System.out.println("The start time or end time is in an invalid format! Please use the format: \"yyyy-MM-dd HH:mm\" and please ensure that the times are correct");
-            throw new InvalidTimeFormatException("The start or end time format is not correct and could not be parsed correctly");
-        }
-        return dateTime;
-    }
 }
