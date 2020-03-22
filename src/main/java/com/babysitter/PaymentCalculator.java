@@ -20,10 +20,15 @@ public class PaymentCalculator {
             LocalDateTime startDateTime = convertStringIntoLocalDateTime(startTime);
             LocalDateTime endDateTime = convertStringIntoLocalDateTime(endTime);
             if (areTimesValid(startDateTime, endDateTime)) {
-                return 0;
+                Integer totalPay = calculateTotalPay(startDateTime, endDateTime, family);
             }
         }
         return 0;
+    }
+
+    private Integer calculateTotalPay(LocalDateTime startDateTime, LocalDateTime endDateTime, String family) {
+        Integer totalPay = 0;
+        return totalPay;
     }
 
     private Boolean validateTimesAndFamily(String startTime, String endTime, String family) {
