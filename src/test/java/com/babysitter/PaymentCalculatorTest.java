@@ -46,7 +46,6 @@ public class PaymentCalculatorTest {
     public void whenCalculateIsCalledWithAnInvalidStartTimeThenAnErrorMessageIsPrintedAndAnInvalidTimeFormatExceptionIsThrown() throws InvalidTimeFormatException {
         paymentCalculator.calculate("2020-03-21 25:00", "2020-03-21 19:00", "A");
         Assert.assertEquals("The start time or end time is in an invalid format! Please use the format: \"yyyy-MM-dd HH:mm\" and please ensure that the times are correct", outputStream.toString().trim());
-
     }
 
     @Test
