@@ -18,11 +18,19 @@ public class TimeAndPayUtilTest {
     }
 
     @Test
-    public void whenGetHoursIsCalledThenTheTotalNumberOfHoursIsCalculatedAndReturned() throws InvalidTimeFormatException {
+    public void whenGetDifferenceInHoursIsCalledAndTheTotalDifferenceInHoursIsFullThenTheTotalNumberOfHoursCalculatedIsFullAndIsReturned() throws InvalidTimeFormatException {
         LocalDateTime startDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-21 18:00");
         LocalDateTime endDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-21 19:00");
-        Long result = timeAndPayUtil.getHours(startDateTime, endDateTime);
+        Long result = timeAndPayUtil.getDifferenceInHours(startDateTime, endDateTime);
         assertEquals(1, result, 0.01);
+    }
+
+    @Test
+    public void whenGetDifferenceInHoursIsCalledAndTheTotalDifferenceInHoursIsFractionalThenTheTotalNumberOfHoursCalculatedIsFullAndIsReturned() throws InvalidTimeFormatException {
+        LocalDateTime startDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-21 18:00");
+        LocalDateTime endDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-21 20:01");
+        Long result = timeAndPayUtil.getDifferenceInHours(startDateTime, endDateTime);
+        assertEquals(2, result, 0.01);
     }
 
 }
