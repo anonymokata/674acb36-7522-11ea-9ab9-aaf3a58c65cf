@@ -1,6 +1,5 @@
 package com.babysitter;
 
-import com.babysitter.constants.Constants;
 import com.babysitter.enums.FamilyEnum;
 import com.babysitter.exception.InvalidTimeFormatException;
 import org.apache.commons.lang3.StringUtils;
@@ -12,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import static com.babysitter.constants.Constants.END_TIME;
+import static com.babysitter.constants.Constants.START_TIME_HOUR;
 
 public class PaymentCalculator {
 
@@ -101,7 +101,7 @@ public class PaymentCalculator {
     private Boolean isStartTimeNotWithinWorkableHours(LocalDateTime startDateTime) {
         Boolean isStartTimeNotWithinWorkableHours = Boolean.FALSE;
 
-        if (startDateTime.getHour() < Constants.START_TIME_HOUR) {
+        if (startDateTime.getHour() < START_TIME_HOUR) {
             System.out.println("The start time should not be earlier than 5:00PM");
             isStartTimeNotWithinWorkableHours = Boolean.TRUE;
         }
@@ -131,7 +131,7 @@ public class PaymentCalculator {
     }
 
     private LocalDateTime convertStringIntoLocalDateTime(String date) throws InvalidTimeFormatException {
-        LocalDateTime dateTime = null;
+        LocalDateTime dateTime;
         DateTimeFormatter formatter = DateTimeFormatter
                 .ofPattern("yyyy-MM-dd HH:mm");
 
