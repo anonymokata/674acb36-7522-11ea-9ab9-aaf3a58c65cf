@@ -10,6 +10,6 @@ public class TimeAndPayUtil {
     }
 
     public Integer calculatePaymentBasedOnHours(Integer hours, Integer payPerHour) {
-        return 0;
+        return payPerHour * hours;
     }
 }

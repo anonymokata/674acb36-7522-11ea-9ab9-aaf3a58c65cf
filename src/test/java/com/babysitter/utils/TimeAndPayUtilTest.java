@@ -34,9 +34,9 @@ public class TimeAndPayUtilTest {
     }
 
     @Test
-    public void whenCalculatePaymentBasedOnHoursIsCalledThenZeroIsReturned() {
+    public void whenCalculatePaymentBasedOnHoursIsCalledThenPaymentCalculatedIsReturned() {
         Integer result = timeAndPayUtil.calculatePaymentBasedOnHours(2, 15);
-        assertEquals(0, result, 0.01);
+        assertEquals(30, result, 0.01);
     }
 
 }
