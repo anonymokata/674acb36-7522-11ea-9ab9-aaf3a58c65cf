@@ -5,7 +5,11 @@ import java.time.LocalDateTime;
 
 public class TimeAndPayUtil {
 
-    public Long getDifferenceInHours(LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        return Duration.between(startDateTime, endDateTime).toHours();
+    public Integer getDifferenceInHours(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        return (int) Duration.between(startDateTime, endDateTime).toHours();
+    }
+
+    public Integer calculatePaymentBasedOnHours(Integer hours, Integer payPerHour) {
+        return 0;
     }
 }
