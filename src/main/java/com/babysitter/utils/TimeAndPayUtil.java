@@ -5,12 +5,20 @@ import java.time.LocalDateTime;
 
 public class TimeAndPayUtil {
 
-    public Integer getTotalPayForSingleTimeLimit(LocalDateTime startDateTime, LocalDateTime endDateTime, LocalDateTime limitDateTime, Integer payBeforeTimeLimit, Integer payAfterTimeLimit) {
+    public Integer getTotalPayForSingleTimeLimit(LocalDateTime startDateTime, LocalDateTime endDateTime, LocalDateTime limitDateTime, Integer payPerHourBeforeTimeLimit, Integer payPerHourAfterTimeLimit) {
         Integer totalPay = 0;
         // When startDateTime and EndDateTime are on or before limitDateTime
         if (endDateTime.isEqual(limitDateTime) || endDateTime.isBefore(limitDateTime)) {
             Integer totalHours = getDifferenceInHours(startDateTime, endDateTime);
-            totalPay = calculatePaymentBasedOnHours(totalHours, payBeforeTimeLimit);
+            totalPay = calculatePaymentBasedOnHours(totalHours, payPerHourBeforeTimeLimit);
+        }
+        // When limitDateTime is between startDateTime and EndDateTime
+        if (startDateTime.isBefore(limitDateTime) && endDateTime.isAfter(limitDateTime)) {
+            Integer hoursBeforeLimit = getDifferenceInHours(startDateTime, limitDateTime);
+            Integer hoursAfterLimit = getDifferenceInHours(limitDateTime, endDateTime);
+            Integer totalPayBeforeLimit = calculatePaymentBasedOnHours(hoursBeforeLimit, payPerHourBeforeTimeLimit);
+            Integer totalPayAfterLimit = calculatePaymentBasedOnHours(hoursAfterLimit, payPerHourAfterTimeLimit);
+            totalPay = totalPayBeforeLimit + totalPayAfterLimit;
         }
         return totalPay;
     }
