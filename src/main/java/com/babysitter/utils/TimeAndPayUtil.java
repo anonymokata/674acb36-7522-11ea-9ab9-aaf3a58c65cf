@@ -6,7 +6,13 @@ import java.time.LocalDateTime;
 public class TimeAndPayUtil {
 
     public Integer getTotalPayForSingleTimeLimit(LocalDateTime startDateTime, LocalDateTime endDateTime, LocalDateTime limitDateTime, Integer payBeforeTimeLimit, Integer payAfterTimeLimit) {
-        return 0;
+        Integer totalPay = 0;
+        // When startDateTime and EndDateTime are on or before limitDateTime
+        if (endDateTime.isEqual(limitDateTime) || endDateTime.isBefore(limitDateTime)) {
+            Integer totalHours = getDifferenceInHours(startDateTime, endDateTime);
+            totalPay = calculatePaymentBasedOnHours(totalHours, payBeforeTimeLimit);
+        }
+        return totalPay;
     }
 
     public Integer getDifferenceInHours(LocalDateTime startDateTime, LocalDateTime endDateTime) {

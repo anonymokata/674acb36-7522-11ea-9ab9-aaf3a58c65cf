@@ -40,17 +40,15 @@ public class TimeAndPayUtilTest {
     }
 
     @Test
-    public void whenGetTotalPayForSingleTimeLimitIsCalledThenZeroIsReturned() throws InvalidTimeFormatException {
+    public void whenGetTotalPayForSingleTimeLimitIsCalledWhereStartAndEndDateTimesAreBeforeTheLimitDateTimeThenTotalPayIsCalculatedCorrectlyAndReturned() throws InvalidTimeFormatException {
         LocalDateTime startDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-21 17:00");
-        LocalDateTime endDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-22 04:00");
-        LocalDateTime localDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-21 23:00");
-
+        LocalDateTime endDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-21 23:00");
+        LocalDateTime limitDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-21 23:00");
         Integer payBeforeLimit = 10;
         Integer payAfterLimit = 15;
 
-
-        Integer result = timeAndPayUtil.getTotalPayForSingleTimeLimit(startDateTime, endDateTime, localDateTime,payBeforeLimit, payAfterLimit);
-        assertEquals(0, result, 0.01);
+        Integer result = timeAndPayUtil.getTotalPayForSingleTimeLimit(startDateTime, endDateTime, limitDateTime, payBeforeLimit, payAfterLimit);
+        assertEquals(60, result, 0.01);
     }
 
 }
