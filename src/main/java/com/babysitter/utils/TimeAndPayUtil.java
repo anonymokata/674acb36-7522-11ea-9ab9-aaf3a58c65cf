@@ -14,7 +14,7 @@ public class TimeAndPayUtil {
                 totalPay = calculatePaymentBasedOnHours(totalHours, payPerHourBeforeTimeLimit);
             }
             // When limitDateTime is between startDateTime and EndDateTime
-            if (startDateTime.isBefore(limitDateTime) && endDateTime.isAfter(limitDateTime)) {
+            if ((startDateTime.isBefore(limitDateTime) || startDateTime.isEqual(limitDateTime)) && endDateTime.isAfter(limitDateTime)) {
                 Integer hoursBeforeLimit = getDifferenceInHours(startDateTime, limitDateTime);
                 Integer hoursAfterLimit = getDifferenceInHours(limitDateTime, endDateTime);
                 Integer totalPayBeforeLimit = calculatePaymentBasedOnHours(hoursBeforeLimit, payPerHourBeforeTimeLimit);
