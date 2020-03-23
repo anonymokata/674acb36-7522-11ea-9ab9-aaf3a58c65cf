@@ -30,7 +30,18 @@ public class TimeAndPayUtil {
         return totalPay;
     }
 
-    public Integer getDifferenceInHours(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    public Integer getTotalPayForDoubleTimeLimit(LocalDateTime startDateTime, LocalDateTime endDateTime, LocalDateTime firstLimit, LocalDateTime secondLimit, Integer payPerHourBeforeFirstLimit, Integer payPerHourBetweenLimits, Integer payPerHourAfterSecondLimit) {
+        return 0;
+    }
+
+
+
+
+
+
+
+
+        public Integer getDifferenceInHours(LocalDateTime startDateTime, LocalDateTime endDateTime) {
         return (int) Duration.between(startDateTime, endDateTime).toHours();
     }
 
