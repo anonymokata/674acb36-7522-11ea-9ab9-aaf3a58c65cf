@@ -1,7 +1,9 @@
 package com.babysitter;
 
+import com.babysitter.constants.Constants;
 import com.babysitter.enums.FamilyEnum;
 import com.babysitter.exception.InvalidTimeFormatException;
+import com.babysitter.service.TimeAndPayService;
 import com.babysitter.utils.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 
@@ -9,24 +11,37 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import static com.babysitter.constants.Constants.END_TIME;
-import static com.babysitter.constants.Constants.START_TIME_HOUR;
+import static com.babysitter.constants.Constants.*;
 
 public class PaymentCalculator {
 
+    TimeAndPayService timeAndPayService;
+
+    PaymentCalculator() {
+        timeAndPayService = new TimeAndPayService();
+    }
+
+
     public Integer calculate(String startTime, String endTime, String family) throws InvalidTimeFormatException {
+        Integer totalPay = 0;
         if (validateTimesAndFamily(startTime, endTime, family)) {
             LocalDateTime startDateTime = DateUtil.convertStringIntoLocalDateTime(startTime);
             LocalDateTime endDateTime = DateUtil.convertStringIntoLocalDateTime(endTime);
             if (areTimesValid(startDateTime, endDateTime)) {
-                Integer totalPay = calculateTotalPay(startDateTime, endDateTime, family);
+                totalPay = calculateTotalPay(startDateTime, endDateTime, family);
             }
         }
-        return 0;
+        return totalPay;
     }
 
     private Integer calculateTotalPay(LocalDateTime startDateTime, LocalDateTime endDateTime, String family) {
         Integer totalPay = 0;
+        if(FamilyEnum.A.toString().equals(family)) {
+            LocalDate limitDate = getDayForLimitDateTime(startDateTime).toLocalDate();
+            LocalTime limitTime = LocalTime.parse(FAMILY_A_ELEVEN_PM_LIMIT);
+            LocalDateTime limitDateTime = LocalDateTime.of(limitDate, limitTime);
+            totalPay = timeAndPayService.getTotalPayForSingleTimeLimit(startDateTime, endDateTime, limitDateTime,FAMILY_A_PAY_PER_HOUR_BEFORE_LIMIT, FAMILY_A_PAY_PER_HOUR_AFTER_LIMIT);
+        }
         return totalPay;
     }
 
@@ -127,6 +142,15 @@ public class PaymentCalculator {
 
         }
         return isEndTimeNotWithinWorkableHours;
+    }
+
+    private LocalDateTime getDayForLimitDateTime(LocalDateTime startDateTime) {
+        if(startDateTime.getHour() <= END_TIME_HOUR) {
+            return startDateTime.minusDays(1);
+        }
+        else {
+            return startDateTime;
+        }
     }
 
 

@@ -1,9 +1,9 @@
-package com.babysitter.utils;
+package com.babysitter.service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-public class TimeAndPayUtil {
+public class TimeAndPayService {
 
     public Integer getTotalPayForSingleTimeLimit(LocalDateTime startDateTime, LocalDateTime endDateTime, LocalDateTime limitDateTime, Integer payPerHourBeforeTimeLimit, Integer payPerHourAfterTimeLimit) {
         Integer totalPay = 0;

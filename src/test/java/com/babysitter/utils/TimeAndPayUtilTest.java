@@ -1,6 +1,7 @@
 package com.babysitter.utils;
 
 import com.babysitter.exception.InvalidTimeFormatException;
+import com.babysitter.service.TimeAndPayService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,18 +11,18 @@ import static org.junit.Assert.assertEquals;
 
 public class TimeAndPayUtilTest {
 
-    TimeAndPayUtil timeAndPayUtil;
+    TimeAndPayService timeAndPayService;
 
     @Before
     public void setUp() {
-        timeAndPayUtil = new TimeAndPayUtil();
+        timeAndPayService = new TimeAndPayService();
     }
 
     @Test
     public void whenGetDifferenceInHoursIsCalledAndTheTotalDifferenceInHoursIsFullThenTheTotalNumberOfHoursCalculatedIsFullAndIsReturned() throws InvalidTimeFormatException {
         LocalDateTime startDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-21 18:00");
         LocalDateTime endDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-21 19:00");
-        Integer result = timeAndPayUtil.getDifferenceInHours(startDateTime, endDateTime);
+        Integer result = timeAndPayService.getDifferenceInHours(startDateTime, endDateTime);
         assertEquals(1, result, 0.01);
     }
 
@@ -29,13 +30,13 @@ public class TimeAndPayUtilTest {
     public void whenGetDifferenceInHoursIsCalledAndTheTotalDifferenceInHoursIsFractionalThenTheTotalNumberOfHoursCalculatedIsFullAndIsReturned() throws InvalidTimeFormatException {
         LocalDateTime startDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-21 18:00");
         LocalDateTime endDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-21 20:01");
-        Integer result = timeAndPayUtil.getDifferenceInHours(startDateTime, endDateTime);
+        Integer result = timeAndPayService.getDifferenceInHours(startDateTime, endDateTime);
         assertEquals(2, result, 0.01);
     }
 
     @Test
     public void whenCalculatePaymentBasedOnHoursIsCalledThenPaymentCalculatedIsReturned() {
-        Integer result = timeAndPayUtil.calculatePaymentBasedOnHours(2, 15);
+        Integer result = timeAndPayService.calculatePaymentBasedOnHours(2, 15);
         assertEquals(30, result, 0.01);
     }
 
@@ -47,7 +48,7 @@ public class TimeAndPayUtilTest {
         Integer payBeforeLimit = 10;
         Integer payAfterLimit = 15;
 
-        Integer result = timeAndPayUtil.getTotalPayForSingleTimeLimit(startDateTime, endDateTime, limitDateTime, payBeforeLimit, payAfterLimit);
+        Integer result = timeAndPayService.getTotalPayForSingleTimeLimit(startDateTime, endDateTime, limitDateTime, payBeforeLimit, payAfterLimit);
         assertEquals(0, result, 0.01);
     }
 
@@ -59,7 +60,7 @@ public class TimeAndPayUtilTest {
         Integer payBeforeLimit = 10;
         Integer payAfterLimit = 15;
 
-        Integer result = timeAndPayUtil.getTotalPayForSingleTimeLimit(startDateTime, endDateTime, limitDateTime, payBeforeLimit, payAfterLimit);
+        Integer result = timeAndPayService.getTotalPayForSingleTimeLimit(startDateTime, endDateTime, limitDateTime, payBeforeLimit, payAfterLimit);
         assertEquals(60, result, 0.01);
     }
 
@@ -71,7 +72,7 @@ public class TimeAndPayUtilTest {
         Integer payBeforeLimit = 10;
         Integer payAfterLimit = 15;
 
-        Integer result = timeAndPayUtil.getTotalPayForSingleTimeLimit(startDateTime, endDateTime, limitDateTime, payBeforeLimit, payAfterLimit);
+        Integer result = timeAndPayService.getTotalPayForSingleTimeLimit(startDateTime, endDateTime, limitDateTime, payBeforeLimit, payAfterLimit);
         assertEquals(75, result, 0.01);
     }
 
@@ -83,7 +84,7 @@ public class TimeAndPayUtilTest {
         Integer payBeforeLimit = 10;
         Integer payAfterLimit = 15;
 
-        Integer result = timeAndPayUtil.getTotalPayForSingleTimeLimit(startDateTime, endDateTime, limitDateTime, payBeforeLimit, payAfterLimit);
+        Integer result = timeAndPayService.getTotalPayForSingleTimeLimit(startDateTime, endDateTime, limitDateTime, payBeforeLimit, payAfterLimit);
         assertEquals(0, result, 0.01);
     }
 
@@ -95,7 +96,7 @@ public class TimeAndPayUtilTest {
         Integer payBeforeLimit = 10;
         Integer payAfterLimit = 15;
 
-        Integer result = timeAndPayUtil.getTotalPayForSingleTimeLimit(startDateTime, endDateTime, limitDateTime, payBeforeLimit, payAfterLimit);
+        Integer result = timeAndPayService.getTotalPayForSingleTimeLimit(startDateTime, endDateTime, limitDateTime, payBeforeLimit, payAfterLimit);
         assertEquals(30, result, 0.01);
     }
 
@@ -107,7 +108,7 @@ public class TimeAndPayUtilTest {
         Integer payBeforeLimit = 10;
         Integer payAfterLimit = 15;
 
-        Integer result = timeAndPayUtil.getTotalPayForSingleTimeLimit(startDateTime, endDateTime, limitDateTime, payBeforeLimit, payAfterLimit);
+        Integer result = timeAndPayService.getTotalPayForSingleTimeLimit(startDateTime, endDateTime, limitDateTime, payBeforeLimit, payAfterLimit);
         assertEquals(75, result, 0.01);
     }
 
@@ -119,7 +120,7 @@ public class TimeAndPayUtilTest {
         Integer payBeforeLimit = 10;
         Integer payAfterLimit = 15;
 
-        Integer result = timeAndPayUtil.getTotalPayForSingleTimeLimit(startDateTime, endDateTime, limitDateTime, payBeforeLimit, payAfterLimit);
+        Integer result = timeAndPayService.getTotalPayForSingleTimeLimit(startDateTime, endDateTime, limitDateTime, payBeforeLimit, payAfterLimit);
         assertEquals(135, result, 0.01);
     }
 
@@ -133,7 +134,7 @@ public class TimeAndPayUtilTest {
         Integer payPerHourBetweenLimits = 12;
         Integer payPerHourAfterSecondLimit = 21;
 
-        Integer result = timeAndPayUtil.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimit, secondLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
+        Integer result = timeAndPayService.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimit, secondLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
         assertEquals(0, result, 0.01);
     }
 
@@ -147,7 +148,7 @@ public class TimeAndPayUtilTest {
         Integer payPerHourBetweenLimits = 12;
         Integer payPerHourAfterSecondLimit = 21;
 
-        Integer result = timeAndPayUtil.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimit, secondLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
+        Integer result = timeAndPayService.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimit, secondLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
         assertEquals(60, result, 0.01);
     }
 
@@ -161,7 +162,7 @@ public class TimeAndPayUtilTest {
         Integer payPerHourBetweenLimits = 12;
         Integer payPerHourAfterSecondLimit = 21;
 
-        Integer result = timeAndPayUtil.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimit, secondLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
+        Integer result = timeAndPayService.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimit, secondLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
         assertEquals(75, result, 0.01);
     }
 
@@ -175,7 +176,7 @@ public class TimeAndPayUtilTest {
         Integer payPerHourBetweenLimits = 12;
         Integer payPerHourAfterSecondLimit = 21;
 
-        Integer result = timeAndPayUtil.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimit, secondLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
+        Integer result = timeAndPayService.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimit, secondLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
         assertEquals(87, result, 0.01);
     }
 
@@ -189,7 +190,7 @@ public class TimeAndPayUtilTest {
         Integer payPerHourBetweenLimits = 12;
         Integer payPerHourAfterSecondLimit = 21;
 
-        Integer result = timeAndPayUtil.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimit, secondLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
+        Integer result = timeAndPayService.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimit, secondLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
         assertEquals(99, result, 0.01);
     }
 
@@ -203,7 +204,7 @@ public class TimeAndPayUtilTest {
         Integer payPerHourBetweenLimits = 12;
         Integer payPerHourAfterSecondLimit = 21;
 
-        Integer result = timeAndPayUtil.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimit, secondLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
+        Integer result = timeAndPayService.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimit, secondLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
         assertEquals(111, result, 0.01);
     }
 
@@ -217,7 +218,7 @@ public class TimeAndPayUtilTest {
         Integer payPerHourBetweenLimits = 12;
         Integer payPerHourAfterSecondLimit = 21;
 
-        Integer result = timeAndPayUtil.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimit, secondLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
+        Integer result = timeAndPayService.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimit, secondLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
         assertEquals(45, result, 0.01);
     }
 
@@ -231,7 +232,7 @@ public class TimeAndPayUtilTest {
         Integer payPerHourBetweenLimits = 12;
         Integer payPerHourAfterSecondLimit = 21;
 
-        Integer result = timeAndPayUtil.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimit, secondLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
+        Integer result = timeAndPayService.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimit, secondLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
         assertEquals(33, result, 0.01);
     }
 
@@ -245,7 +246,7 @@ public class TimeAndPayUtilTest {
         Integer payPerHourBetweenLimits = 12;
         Integer payPerHourAfterSecondLimit = 21;
 
-        Integer result = timeAndPayUtil.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimit, secondLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
+        Integer result = timeAndPayService.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimit, secondLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
         assertEquals(0, result, 0.01);
     }
 
@@ -259,7 +260,7 @@ public class TimeAndPayUtilTest {
         Integer payPerHourBetweenLimits = 12;
         Integer payPerHourAfterSecondLimit = 21;
 
-        Integer result = timeAndPayUtil.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimit, secondLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
+        Integer result = timeAndPayService.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimit, secondLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
         assertEquals(63, result, 0.01);
     }
 
