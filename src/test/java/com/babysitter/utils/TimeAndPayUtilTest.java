@@ -124,16 +124,16 @@ public class TimeAndPayUtilTest {
     }
 
     @Test
-    public void whenGetTotalPayForDoubleTimeLimitIsCalledThenZeroIsReturned() throws InvalidTimeFormatException {
+    public void whenGetTotalPayForDoubleTimeLimitIsCalledWhereEndTimeIsEqualToTheFirstLimitThenTotalPayIsCalculatedAndReturned() throws InvalidTimeFormatException {
         LocalDateTime startDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-21 17:00");
-        LocalDateTime endDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-22 04:00");
+        LocalDateTime endDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-21 22:00");
         LocalDateTime firstLimit = DateUtil.convertStringIntoLocalDateTime("2020-03-21 22:00");
-        LocalDateTime secondtLimit = DateUtil.convertStringIntoLocalDateTime("2020-03-22 00:00");
+        LocalDateTime secondLimit = DateUtil.convertStringIntoLocalDateTime("2020-03-22 00:00");
         Integer payPerHourBeforeFirstLimit = 15;
         Integer payPerHourBetweenLimits = 12;
         Integer payPerHourAfterSecondLimit = 21;
 
-        Integer result = timeAndPayUtil.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimit, secondtLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
-        assertEquals(0, result, 0.01);
+        Integer result = timeAndPayUtil.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimit, secondLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
+        assertEquals(75, result, 0.01);
     }
 }
