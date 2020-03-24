@@ -7,24 +7,20 @@ public class TimeAndPayUtil {
 
     public Integer getTotalPayForSingleTimeLimit(LocalDateTime startDateTime, LocalDateTime endDateTime, LocalDateTime limitDateTime, Integer payPerHourBeforeTimeLimit, Integer payPerHourAfterTimeLimit) {
         Integer totalPay = 0;
-        if(!startDateTime.equals(endDateTime)) {
+        if (!startDateTime.equals(endDateTime)) {
             // When startDateTime and EndDateTime are on or before limitDateTime
             if (endDateTime.isEqual(limitDateTime) || endDateTime.isBefore(limitDateTime)) {
-                Integer totalHours = getDifferenceInHours(startDateTime, endDateTime);
-                totalPay = calculatePaymentBasedOnHours(totalHours, payPerHourBeforeTimeLimit);
+                totalPay = calcuatePaymentBasedOnTimes(startDateTime, endDateTime, payPerHourBeforeTimeLimit);
             }
             // When limitDateTime is between startDateTime and EndDateTime
             if ((startDateTime.isBefore(limitDateTime) || startDateTime.isEqual(limitDateTime)) && endDateTime.isAfter(limitDateTime)) {
-                Integer hoursBeforeLimit = getDifferenceInHours(startDateTime, limitDateTime);
-                Integer hoursAfterLimit = getDifferenceInHours(limitDateTime, endDateTime);
-                Integer totalPayBeforeLimit = calculatePaymentBasedOnHours(hoursBeforeLimit, payPerHourBeforeTimeLimit);
-                Integer totalPayAfterLimit = calculatePaymentBasedOnHours(hoursAfterLimit, payPerHourAfterTimeLimit);
-                totalPay = totalPayBeforeLimit + totalPayAfterLimit;
+                Integer payBeforeLimit = calcuatePaymentBasedOnTimes(startDateTime, limitDateTime, payPerHourBeforeTimeLimit);
+                Integer payAfterLimit = calcuatePaymentBasedOnTimes(limitDateTime, endDateTime, payPerHourAfterTimeLimit);
+                totalPay = payBeforeLimit + payAfterLimit;
             }
             // When startDateTime and EndDateTime are on or after limitDateTime
             if (startDateTime.isAfter(limitDateTime) && (endDateTime.isAfter(limitDateTime))) {
-                Integer totalHours = getDifferenceInHours(startDateTime, endDateTime);
-                totalPay = calculatePaymentBasedOnHours(totalHours, payPerHourAfterTimeLimit);
+                totalPay = calcuatePaymentBasedOnTimes(startDateTime, endDateTime, payPerHourAfterTimeLimit);
             }
         }
         return totalPay;
@@ -32,25 +28,28 @@ public class TimeAndPayUtil {
 
     public Integer getTotalPayForDoubleTimeLimit(LocalDateTime startDateTime, LocalDateTime endDateTime, LocalDateTime firstLimit, LocalDateTime secondLimit, Integer payPerHourBeforeFirstLimit, Integer payPerHourBetweenLimits, Integer payPerHourAfterSecondLimit) {
         Integer totalPay = 0;
-        if(endDateTime.isEqual(secondLimit) || endDateTime.isBefore(secondLimit)) {
+        if (endDateTime.isEqual(secondLimit) || endDateTime.isBefore(secondLimit)) {
             totalPay = getTotalPayForSingleTimeLimit(startDateTime, endDateTime, firstLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits);
-        }
-        else {
-            if(startDateTime.isBefore(firstLimit)) {
-                totalPay = 0;
+        } else {
+            if (startDateTime.isBefore(firstLimit)) {
+                Integer payUntilFirstLimit = calcuatePaymentBasedOnTimes(startDateTime, firstLimit, payPerHourBeforeFirstLimit);
+                Integer payFromFirstLimitUntilEndDateTime = calcuatePaymentBasedOnTimes(firstLimit, endDateTime, payPerHourBetweenLimits);
+                totalPay = payUntilFirstLimit + payFromFirstLimitUntilEndDateTime;
+            }
+            else {
+                return 0;
             }
         }
         return totalPay;
     }
 
+    public Integer calcuatePaymentBasedOnTimes(LocalDateTime startDateTime, LocalDateTime endDateTime, Integer payPerHour) {
+        Integer totalHours = getDifferenceInHours(startDateTime, endDateTime);
+        return calculatePaymentBasedOnHours(totalHours, payPerHour);
+    }
 
 
-
-
-
-
-
-        public Integer getDifferenceInHours(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    public Integer getDifferenceInHours(LocalDateTime startDateTime, LocalDateTime endDateTime) {
         return (int) Duration.between(startDateTime, endDateTime).toHours();
     }
 
