@@ -35,8 +35,7 @@ public class TimeAndPayUtil {
                 Integer payUntilFirstLimit = calcuatePaymentBasedOnTimes(startDateTime, firstLimit, payPerHourBeforeFirstLimit);
                 Integer payFromFirstLimitUntilEndDateTime = calcuatePaymentBasedOnTimes(firstLimit, endDateTime, payPerHourBetweenLimits);
                 totalPay = payUntilFirstLimit + payFromFirstLimitUntilEndDateTime;
-            }
-            else {
+            } else {
                 totalPay = getTotalPayForSingleTimeLimit(startDateTime, endDateTime, secondLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
             }
         }
