@@ -32,7 +32,7 @@ public class TimeAndPayUtil {
 
     public Integer getTotalPayForDoubleTimeLimit(LocalDateTime startDateTime, LocalDateTime endDateTime, LocalDateTime firstLimit, LocalDateTime secondLimit, Integer payPerHourBeforeFirstLimit, Integer payPerHourBetweenLimits, Integer payPerHourAfterSecondLimit) {
         Integer totalPay = 0;
-        if(endDateTime.isEqual(firstLimit) || endDateTime.isBefore(firstLimit)) {
+        if(endDateTime.isEqual(secondLimit) || endDateTime.isBefore(secondLimit)) {
             totalPay = getTotalPayForSingleTimeLimit(startDateTime, endDateTime, firstLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits);
         }
         return totalPay;
