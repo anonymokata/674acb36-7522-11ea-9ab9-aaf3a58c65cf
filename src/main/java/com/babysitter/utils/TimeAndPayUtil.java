@@ -36,7 +36,9 @@ public class TimeAndPayUtil {
             totalPay = getTotalPayForSingleTimeLimit(startDateTime, endDateTime, firstLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits);
         }
         else {
-            totalPay = 0;
+            if(startDateTime.isBefore(firstLimit)) {
+                totalPay = 0;
+            }
         }
         return totalPay;
     }
