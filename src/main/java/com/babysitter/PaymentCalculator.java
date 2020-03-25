@@ -1,6 +1,5 @@
 package com.babysitter;
 
-import com.babysitter.constants.Constants;
 import com.babysitter.enums.FamilyEnum;
 import com.babysitter.exception.InvalidTimeFormatException;
 import com.babysitter.service.TimeAndPayService;
@@ -36,11 +35,14 @@ public class PaymentCalculator {
 
     private Integer calculateTotalPay(LocalDateTime startDateTime, LocalDateTime endDateTime, String family) {
         Integer totalPay = 0;
-        if(FamilyEnum.A.toString().equals(family)) {
+        if (FamilyEnum.A.toString().equals(family)) {
             LocalDate limitDate = getDayForLimitDateTime(startDateTime).toLocalDate();
             LocalTime limitTime = LocalTime.parse(FAMILY_A_ELEVEN_PM_LIMIT);
             LocalDateTime limitDateTime = LocalDateTime.of(limitDate, limitTime);
-            totalPay = timeAndPayService.getTotalPayForSingleTimeLimit(startDateTime, endDateTime, limitDateTime,FAMILY_A_PAY_PER_HOUR_BEFORE_LIMIT, FAMILY_A_PAY_PER_HOUR_AFTER_LIMIT);
+            totalPay = timeAndPayService.getTotalPayForSingleTimeLimit(startDateTime, endDateTime, limitDateTime, FAMILY_A_PAY_PER_HOUR_BEFORE_LIMIT, FAMILY_A_PAY_PER_HOUR_AFTER_LIMIT);
+        }
+        if (FamilyEnum.B.toString().equals(family)) {
+            totalPay = 0;
         }
         return totalPay;
     }
@@ -88,7 +90,7 @@ public class PaymentCalculator {
 
     private Boolean areTimesValid(LocalDateTime startDateTime, LocalDateTime endDateTime) {
         Boolean areTimesValid = Boolean.TRUE;
-        if (isEndTimeBeforeStartTime(startDateTime, endDateTime) || areTimesNotWithinWorkableHours(startDateTime, endDateTime)) {
+        if (isEndTimeBeforeStartTime(startDateTime, endDateTime) || !areTimesWithinWorkableHours(startDateTime, endDateTime)) {
             areTimesValid = Boolean.FALSE;
         }
         return areTimesValid;
@@ -103,52 +105,34 @@ public class PaymentCalculator {
         return isEndTimeBeforeStartTime;
     }
 
-    private Boolean areTimesNotWithinWorkableHours(LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        Boolean areTimesNotWithinWorkableHours = Boolean.FALSE;
+    private Boolean areTimesWithinWorkableHours(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        Boolean areTimesWithinWorkableHours = Boolean.FALSE;
+        LocalDateTime allowedEndStartDateTime;
 
-        if (isStartTimeNotWithinWorkableHours(startDateTime) || isEndTimeNotWithinWorkableHours(startDateTime, endDateTime)) {
-            areTimesNotWithinWorkableHours = Boolean.TRUE;
-        }
-        return areTimesNotWithinWorkableHours;
-    }
-
-    private Boolean isStartTimeNotWithinWorkableHours(LocalDateTime startDateTime) {
-        Boolean isStartTimeNotWithinWorkableHours = Boolean.FALSE;
-
-        if (startDateTime.getHour() < START_TIME_HOUR) {
-            System.out.println("The start time should not be earlier than 5:00PM");
-            isStartTimeNotWithinWorkableHours = Boolean.TRUE;
-        }
-        return isStartTimeNotWithinWorkableHours;
-    }
-
-    private Boolean isEndTimeNotWithinWorkableHours(LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        Boolean isEndTimeNotWithinWorkableHours = Boolean.FALSE;
-
-        if (!(startDateTime.toLocalDate().equals(endDateTime.toLocalDate()))) {
-            // There is already a check in the function isEndTimeBeforeStartTime to see if the end time is before the start time. That should ensure that the end time is on or after the start time.
-            // This check is for checking if the end time is before 4am for the next day
-
-            // Create a new LocalDateTime which will be used to compare with the endDateTime
-            // The date of the LocalDateTime will be the startDateTime with one more day
-            LocalDate localDateForNextDay = startDateTime.toLocalDate().plusDays(1);
-            // The time of the LocalDateTime will be 4AM
-            LocalTime localTimeForNextDay = LocalTime.parse(END_TIME);
-            LocalDateTime dateTimeForNextDay = LocalDateTime.of(localDateForNextDay, localTimeForNextDay);
-            if (endDateTime.isAfter(dateTimeForNextDay)) {
-                System.out.println("The end time cannot be past 4AM and the end date either has to be on the same or the next day of the start date!");
-                isEndTimeNotWithinWorkableHours = Boolean.TRUE;
+        if (startDateTime.getHour() >= START_TIME_HOUR) {
+            allowedEndStartDateTime = LocalDateTime.of(startDateTime.plusDays(1).toLocalDate(), LocalTime.parse(END_TIME));
+            if (endDateTime.isEqual(allowedEndStartDateTime) || endDateTime.isBefore(allowedEndStartDateTime)) {
+                areTimesWithinWorkableHours = Boolean.TRUE;
             }
-
+        } else if ((startDateTime.getHour() < END_TIME_HOUR)
+                || ((startDateTime.getHour() == END_TIME_HOUR) && (startDateTime.getMinute() == ZERO_MINUTE))) {
+            allowedEndStartDateTime = LocalDateTime.of(startDateTime.toLocalDate(), LocalTime.parse(END_TIME));
+            if (endDateTime.isEqual(allowedEndStartDateTime) || endDateTime.isBefore(allowedEndStartDateTime)) {
+                areTimesWithinWorkableHours = Boolean.TRUE;
+            }
         }
-        return isEndTimeNotWithinWorkableHours;
+
+        if (!areTimesWithinWorkableHours) {
+            System.out.println("The Start Time or End Time are not within the Allowed Workable Hours! The Allowed Workable Hours are from 5:00PM to 4:00 AM inclusive.");
+        }
+
+        return areTimesWithinWorkableHours;
     }
 
     private LocalDateTime getDayForLimitDateTime(LocalDateTime startDateTime) {
-        if(startDateTime.getHour() <= END_TIME_HOUR) {
+        if (startDateTime.getHour() <= END_TIME_HOUR) {
             return startDateTime.minusDays(1);
-        }
-        else {
+        } else {
             return startDateTime;
         }
     }
