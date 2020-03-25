@@ -90,19 +90,22 @@ public class PaymentCalculator {
 
     private Boolean areTimesValid(LocalDateTime startDateTime, LocalDateTime endDateTime) {
         Boolean areTimesValid = Boolean.TRUE;
-        if (isEndTimeBeforeStartTime(startDateTime, endDateTime) || !areTimesWithinWorkableHours(startDateTime, endDateTime)) {
+        if (!isStartTimeBeforeOrEqualToEndTime(startDateTime, endDateTime) || !areTimesWithinWorkableHours(startDateTime, endDateTime)) {
             areTimesValid = Boolean.FALSE;
         }
         return areTimesValid;
     }
 
-    private Boolean isEndTimeBeforeStartTime(LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        Boolean isEndTimeBeforeStartTime = Boolean.FALSE;
-        if (endDateTime.isBefore(startDateTime)) {
-            System.out.println("End time cannot be before the start time!");
-            isEndTimeBeforeStartTime = Boolean.TRUE;
+    private Boolean isStartTimeBeforeOrEqualToEndTime(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        Boolean isStartTimeBeforeOrEqualToEndTime = Boolean.FALSE;
+        if (startDateTime.isBefore(endDateTime) || startDateTime.isEqual(endDateTime)) {
+            isStartTimeBeforeOrEqualToEndTime = Boolean.TRUE;
         }
-        return isEndTimeBeforeStartTime;
+
+        if(!isStartTimeBeforeOrEqualToEndTime) {
+            System.out.println("End time cannot be before the start time!");
+        }
+        return isStartTimeBeforeOrEqualToEndTime;
     }
 
     private Boolean areTimesWithinWorkableHours(LocalDateTime startDateTime, LocalDateTime endDateTime) {
