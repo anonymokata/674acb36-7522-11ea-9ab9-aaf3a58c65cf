@@ -185,4 +185,12 @@ public class PaymentCalculatorTest {
         assertEquals(68, result, 0.01);
     }
 
+
+    @Test
+    public void whenCalculateIsCalledForFamilyBIsCalledWhereEndTimeIsEqualToTheSecondLimitThenTotalPayIsCalculatedAndReturned() throws InvalidTimeFormatException {
+        Integer result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-22 00:00", "B");
+        assertEquals(76, result, 0.01);
+    }
+
+
 }
