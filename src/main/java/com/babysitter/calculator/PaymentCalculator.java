@@ -1,4 +1,4 @@
-package com.babysitter;
+package com.babysitter.calculator;
 
 import com.babysitter.enums.FamilyEnum;
 import com.babysitter.exception.InvalidTimeFormatException;
@@ -16,7 +16,7 @@ public class PaymentCalculator {
 
     TimeAndPayService timeAndPayService;
 
-    PaymentCalculator() {
+    public PaymentCalculator() {
         timeAndPayService = new TimeAndPayService();
     }
 

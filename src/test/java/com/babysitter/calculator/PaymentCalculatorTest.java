@@ -1,5 +1,6 @@
-package com.babysitter;
+package com.babysitter.calculator;
 
+import com.babysitter.calculator.PaymentCalculator;
 import com.babysitter.exception.InvalidTimeFormatException;
 import org.junit.Assert;
 import org.junit.Before;
