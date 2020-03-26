@@ -50,6 +50,9 @@ public class PaymentCalculator {
 
             totalPay = timeAndPayService.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimitDateTime, secondLimitDateTime, FAMILY_B_PAY_PER_HOUR_BEFORE_FIRST_LIMIT, FAMILY_B_PAY_PER_HOUR_BETWEEN_LIMITS, FAMILY_B_PAY_PER_HOUR_AFTER_SECOND_LIMIT);
         }
+
+        if (FamilyEnum.C.toString().equals(family)) {
+        }
         return totalPay;
     }
 
