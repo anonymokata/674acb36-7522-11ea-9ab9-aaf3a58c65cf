@@ -27,9 +27,7 @@ public class PaymentCalculator {
             LocalDateTime startDateTime = DateUtil.convertStringIntoLocalDateTime(startTime);
             LocalDateTime endDateTime = DateUtil.convertStringIntoLocalDateTime(endTime);
             if (areTimesValid(startDateTime, endDateTime)) {
-                if(!startDateTime.isEqual(endDateTime)) {
-                    totalPay = calculateTotalPay(startDateTime, endDateTime, family);
-                }
+                totalPay = calculateTotalPay(startDateTime, endDateTime, family);
             }
         }
         return totalPay;
@@ -45,11 +43,12 @@ public class PaymentCalculator {
             totalPay = timeAndPayService.getTotalPayForSingleTimeLimit(startDateTime, endDateTime, limitDateTime, FAMILY_A_PAY_PER_HOUR_BEFORE_LIMIT, FAMILY_A_PAY_PER_HOUR_AFTER_LIMIT);
         }
         if (FamilyEnum.B.toString().equals(family)) {
-            LocalDate limitDate = getDayForLimitDateTime(startDateTime).toLocalDate();
-            LocalDateTime firstlLimitDateTime = LocalDateTime.of(limitDate, LocalTime.parse(FAMILY_B_TEN_PM_LIMIT));
-            LocalDateTime secondLimitDateTime = LocalDateTime.of(limitDate, LocalTime.parse(FAMILY_B_MIDNIGHT_LIMIT));
+            LocalDate firstLimitDate = getDayForLimitDateTime(startDateTime).toLocalDate();
+            LocalDate secondLimitDate = getDayForMidnightLimitDateTime(startDateTime).toLocalDate();
+            LocalDateTime firstLimitDateTime = LocalDateTime.of(firstLimitDate, LocalTime.parse(FAMILY_B_TEN_PM_LIMIT));
+            LocalDateTime secondLimitDateTime = LocalDateTime.of(secondLimitDate, LocalTime.parse(FAMILY_B_MIDNIGHT_LIMIT));
 
-            totalPay = timeAndPayService.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstlLimitDateTime, secondLimitDateTime, FAMILY_B_PAY_PER_HOUR_BEFORE_FIRST_LIMIT, FAMILY_B_PAY_PER_HOUR_BETWEEN_LIMITS, FAMILY_B_PAY_PER_HOUR_AFTER_SECOND_LIMIT);
+            totalPay = timeAndPayService.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimitDateTime, secondLimitDateTime, FAMILY_B_PAY_PER_HOUR_BEFORE_FIRST_LIMIT, FAMILY_B_PAY_PER_HOUR_BETWEEN_LIMITS, FAMILY_B_PAY_PER_HOUR_AFTER_SECOND_LIMIT);
         }
         return totalPay;
     }
@@ -109,7 +108,7 @@ public class PaymentCalculator {
             isStartTimeBeforeOrEqualToEndTime = Boolean.TRUE;
         }
 
-        if(!isStartTimeBeforeOrEqualToEndTime) {
+        if (!isStartTimeBeforeOrEqualToEndTime) {
             System.out.println("End time cannot be before the start time!");
         }
         return isStartTimeBeforeOrEqualToEndTime;
@@ -144,6 +143,14 @@ public class PaymentCalculator {
             return startDateTime.minusDays(1);
         } else {
             return startDateTime;
+        }
+    }
+
+    private LocalDateTime getDayForMidnightLimitDateTime(LocalDateTime startDateTime) {
+        if (startDateTime.getHour() <= END_TIME_HOUR) {
+            return startDateTime;
+        } else {
+            return startDateTime.plusDays(1);
         }
     }
 

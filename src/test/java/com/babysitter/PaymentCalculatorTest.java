@@ -162,10 +162,14 @@ public class PaymentCalculatorTest {
 
     @Test
     public void whenCalculateIsCalledForFamilyBIsCalledWhereStartAndEndTimeAreEqualThenTotalPayIsCalculatedAndReturned() throws InvalidTimeFormatException {
-        LocalDateTime startDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-21 18:00");
-        LocalDateTime endDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-21 18:00");
-
         Integer result = paymentCalculator.calculate("2020-03-21 18:00", "2020-03-21 18:00", "B");
         assertEquals(0, result, 0.01);
     }
+
+    @Test
+    public void whenCalculateIsCalledForFamilyBIsCalledWhereEndTimeIsBeforeTheFirstLimitThenTotalPayIsCalculatedAndReturned() throws InvalidTimeFormatException {
+        Integer result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-21 21:00", "B");
+        assertEquals(48, result, 0.01);
+    }
+
 }
