@@ -205,7 +205,7 @@ public class TimeAndPayUtilTest {
         Integer payPerHourAfterSecondLimit = 21;
 
         Integer result = timeAndPayService.getTotalPayForDoubleTimeLimit(startDateTime, endDateTime, firstLimit, secondLimit, payPerHourBeforeFirstLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
-        assertEquals(111, result, 0.01);
+        assertEquals(120, result, 0.01);
     }
 
     @Test

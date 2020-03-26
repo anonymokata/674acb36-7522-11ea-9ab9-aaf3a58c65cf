@@ -33,7 +33,7 @@ public class TimeAndPayService {
         } else {
             if (startDateTime.isBefore(firstLimit)) {
                 Integer payUntilFirstLimit = calcuatePaymentBasedOnTimes(startDateTime, firstLimit, payPerHourBeforeFirstLimit);
-                Integer payFromFirstLimitUntilEndDateTime = calcuatePaymentBasedOnTimes(firstLimit, endDateTime, payPerHourBetweenLimits);
+                Integer payFromFirstLimitUntilEndDateTime = getTotalPayForSingleTimeLimit(firstLimit, endDateTime, secondLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
                 totalPay = payUntilFirstLimit + payFromFirstLimitUntilEndDateTime;
             } else {
                 totalPay = getTotalPayForSingleTimeLimit(startDateTime, endDateTime, secondLimit, payPerHourBetweenLimits, payPerHourAfterSecondLimit);
