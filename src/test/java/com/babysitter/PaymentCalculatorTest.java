@@ -1,12 +1,14 @@
 package com.babysitter;
 
 import com.babysitter.exception.InvalidTimeFormatException;
+import com.babysitter.utils.DateUtil;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
 
@@ -159,8 +161,11 @@ public class PaymentCalculatorTest {
 //    Family B
 
     @Test
-    public void whenCalculateIsCalledForFamilyBThenTotalPayIsReturnedIsZero() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-22 04:00", "B");
+    public void whenCalculateIsCalledForFamilyBIsCalledWhereStartAndEndTimeAreEqualThenTotalPayIsCalculatedAndReturned() throws InvalidTimeFormatException {
+        LocalDateTime startDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-21 18:00");
+        LocalDateTime endDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-21 18:00");
+
+        Integer result = paymentCalculator.calculate("2020-03-21 18:00", "2020-03-21 18:00", "B");
         assertEquals(0, result, 0.01);
     }
 }
