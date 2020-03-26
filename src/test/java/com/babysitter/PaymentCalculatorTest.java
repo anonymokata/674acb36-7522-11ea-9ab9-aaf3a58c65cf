@@ -1,14 +1,12 @@
 package com.babysitter;
 
 import com.babysitter.exception.InvalidTimeFormatException;
-import com.babysitter.utils.DateUtil;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
 
