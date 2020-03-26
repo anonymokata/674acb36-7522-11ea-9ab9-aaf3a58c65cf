@@ -52,6 +52,11 @@ public class PaymentCalculator {
         }
 
         if (FamilyEnum.C.toString().equals(family)) {
+            LocalDate limitDate = getDayForLimitDateTime(startDateTime).toLocalDate();
+            LocalTime limitTime = LocalTime.parse(FAMILY_C_NINE_PM_LIMIT);
+            LocalDateTime limitDateTime = LocalDateTime.of(limitDate, limitTime);
+
+            totalPay = timeAndPayService.getTotalPayForSingleTimeLimit(startDateTime, endDateTime, limitDateTime, FAMILY_C_PAY_PER_HOUR_BEFORE_LIMIT, FAMILY_C_PAY_PER_HOUR_AFTER_LIMIT);
         }
         return totalPay;
     }

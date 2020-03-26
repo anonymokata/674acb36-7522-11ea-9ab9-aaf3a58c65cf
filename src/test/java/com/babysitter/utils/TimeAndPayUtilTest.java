@@ -101,7 +101,7 @@ public class TimeAndPayUtilTest {
     }
 
     @Test
-    public void whenGetTotalPayForSingleTimeLimitIsCalledWhereStartTimeEqualToLimitDateTimeAndEndDateTimeIsAfterLimitDateTimeThenTotalPayIsCalculatedCorrectlyAndReturned() throws InvalidTimeFormatException {
+    public void whenGetTotalPayForSingleTimeLimitIsCalledWhereStartTimeIsEqualToLimitDateTimeAndEndDateTimeIsAfterLimitDateTimeThenTotalPayIsCalculatedCorrectlyAndReturned() throws InvalidTimeFormatException {
         LocalDateTime startDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-21 23:00");
         LocalDateTime endDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-22 04:00");
         LocalDateTime limitDateTime = DateUtil.convertStringIntoLocalDateTime("2020-03-21 23:00");
