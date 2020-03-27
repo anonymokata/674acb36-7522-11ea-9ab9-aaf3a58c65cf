@@ -117,43 +117,43 @@ public class PaymentCalculatorTest {
 
     @Test
     public void whenCalculateIsCalledForFamilyAWhereStartAndEndDateTimesAreEqualThenTotalPayIsCalculatedCorrectlyAndReturned() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-21 17:00", "A");
+        int result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-21 17:00", "A");
         assertEquals(0, result, 0.01);
     }
 
     @Test
     public void whenCalculateIsCalledForFamilyAWhereStartAndEndDateTimesAreBeforeTheLimitDateTimeThenTotalPayIsCalculatedCorrectlyAndReturned() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-21 23:00", "A");
+        int result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-21 23:00", "A");
         assertEquals(90, result, 0.01);
     }
 
     @Test
     public void whenCalculateIsCalledForFamilyAWhereLimitDateTimeIsBetweenStartAndEndDateTimesThenTotalPayIsCalculatedCorrectlyAndReturned() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-22 00:00", "A");
+        int result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-22 00:00", "A");
         assertEquals(110, result, 0.01);
     }
 
     @Test
     public void whenCalculateIsCalledForFamilyAWhereStartDateTimeEndDateTimeAndLimitDateTimeAreAllEqualThenTotalPayIsCalculatedCorrectlyAndReturned() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-21 23:00", "2020-03-21 23:00", "A");
+        int result = paymentCalculator.calculate("2020-03-21 23:00", "2020-03-21 23:00", "A");
         assertEquals(0, result, 0.01);
     }
 
     @Test
     public void whenCalculateIsCalledForFamilyAWhereStartAndEndDateTimeAreAfterTheLimitDateTimeThenTotalPayIsCalculatedCorrectlyAndReturned() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-22 00:00", "2020-03-22 02:00", "A");
+        int result = paymentCalculator.calculate("2020-03-22 00:00", "2020-03-22 02:00", "A");
         assertEquals(40, result, 0.01);
     }
 
     @Test
     public void whenCalculateIsCalledForFamilyAWhereStartTimeIsEqualToLimitDateTimeAndEndDateTimeIsAfterLimitDateTimeThenTotalPayIsCalculatedCorrectlyAndReturned() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-21 23:00", "2020-03-22 04:00", "A");
+        int result = paymentCalculator.calculate("2020-03-21 23:00", "2020-03-22 04:00", "A");
         assertEquals(100, result, 0.01);
     }
 
     @Test
     public void whenCalculateIsCalledForFamilyAWhereStartTimeIsFivePMAndEndTimeIsFourAMThenTotalPayIsCalculatedCorrectlyAndReturned() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-22 04:00", "A");
+        int result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-22 04:00", "A");
         assertEquals(190, result, 0.01);
     }
 
@@ -161,112 +161,112 @@ public class PaymentCalculatorTest {
 
     @Test
     public void whenCalculateIsCalledForFamilyBIsCalledWhereStartAndEndTimeAreEqualThenTotalPayIsCalculatedAndReturned() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-21 18:00", "2020-03-21 18:00", "B");
+        int result = paymentCalculator.calculate("2020-03-21 18:00", "2020-03-21 18:00", "B");
         assertEquals(0, result, 0.01);
     }
 
     @Test
     public void whenCalculateIsCalledForFamilyBIsCalledWhereEndTimeIsBeforeTheFirstLimitThenTotalPayIsCalculatedAndReturned() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-21 21:00", "B");
+        int result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-21 21:00", "B");
         assertEquals(48, result, 0.01);
     }
 
     @Test
     public void whenCalculateIsCalledForFamilyBIsCalledWhereEndTimeIsEqualToTheFirstLimitThenTotalPayIsCalculatedAndReturned() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-21 22:00", "B");
+        int result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-21 22:00", "B");
         assertEquals(60, result, 0.01);
     }
 
 
     @Test
     public void whenCalculateIsCalledForFamilyBIsCalledWhereEndTimeIsBetweenTheLimitsThenTotalPayIsCalculatedAndReturned() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-21 23:00", "B");
+        int result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-21 23:00", "B");
         assertEquals(68, result, 0.01);
     }
 
 
     @Test
     public void whenCalculateIsCalledForFamilyBIsCalledWhereEndTimeIsEqualToTheSecondLimitThenTotalPayIsCalculatedAndReturned() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-22 00:00", "B");
+        int result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-22 00:00", "B");
         assertEquals(76, result, 0.01);
     }
 
     @Test
     public void whenCalculateIsCalledForFamilyBIsCalledWhereStartTimeIsBeforeTheFirstLimitAndEndTimeIsAfterTheSecondLimitThenTotalPayCalculatedIsReturned() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-22 01:00", "B");
+        int result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-22 01:00", "B");
         assertEquals(92, result, 0.01);
     }
 
     @Test
     public void whenCalculateIsCalledForFamilyBIsCalledWhereStartTimeIsEqualToTheFirstLimitAndEndTimeIsAfterTheSecondLimitThenTotalPayCalculatedIsReturned() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-21 22:00", "2020-03-22 01:00", "B");
+        int result = paymentCalculator.calculate("2020-03-21 22:00", "2020-03-22 01:00", "B");
         assertEquals(32, result, 0.01);
     }
 
     @Test
     public void whenCalculateIsCalledForFamilyBIsCalledWhereStartTimeIsBetweenTheLimitsAndEndTimeIsAfterTheSecondLimitThenTotalPayCalculatedIsReturned() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-21 23:00", "2020-03-22 01:00", "B");
+        int result = paymentCalculator.calculate("2020-03-21 23:00", "2020-03-22 01:00", "B");
         assertEquals(24, result, 0.01);
     }
 
     @Test
     public void whenCalculateIsCalledForFamilyBIsCalledWhereStartTimeIsFivePMAndEndTimeIsFourAMThenTotalPayCalculatedIsReturned() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-22 04:00", "B");
+        int result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-22 04:00", "B");
         assertEquals(140, result, 0.01);
     }
 
     @Test
     public void whenCalculateIsCalledForFamilyBIsCalledWhereStartTimeAndEndTimeAreEqualToTheSecondLimitThenTotalPayIsZero() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-21 22:00", "2020-03-21 22:00", "B");
+        int result = paymentCalculator.calculate("2020-03-21 22:00", "2020-03-21 22:00", "B");
         assertEquals(0, result, 0.01);
     }
 
     @Test
     public void whenCalculateIsCalledForFamilyBIsCalledWhereStartTimeAndEndTimeAreAfterTheSecondLimitThenTotalPayCalculatedIsReturned() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-22 01:00", "2020-03-22 04:00", "B");
+        int result = paymentCalculator.calculate("2020-03-22 01:00", "2020-03-22 04:00", "B");
         assertEquals(48, result, 0.01);
     }
 
     // Family C
     @Test
     public void whenCalculateIsCalledForFamilyCWhereStartAndEndDateTimesAreEqualThenTotalPayIsCalculatedCorrectlyAndReturned() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-21 17:00", "C");
+        int result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-21 17:00", "C");
         assertEquals(0, result, 0.01);
     }
 
     @Test
     public void whenCalculateIsCalledForFamilyCWhereStartAndEndDateTimesAreBeforeTheLimitDateTimeThenTotalPayIsCalculatedCorrectlyAndReturned() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-21 20:00", "C");
+        int result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-21 20:00", "C");
         assertEquals(63, result, 0.01);
     }
 
     @Test
     public void whenCalculateIsCalledForFamilyCWhereLimitDateTimeIsBetweenStartAndEndDateTimesThenTotalPayIsCalculatedCorrectlyAndReturned() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-22 00:00", "C");
+        int result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-22 00:00", "C");
         assertEquals(129, result, 0.01);
     }
 
     @Test
     public void whenCalculateIsCalledForFamilyCWhereStartDateTimeEndDateTimeAndLimitDateTimeAreAllEqualThenTotalPayIsCalculatedCorrectlyAndReturned() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-21 21:00", "2020-03-21 21:00", "C");
+        int result = paymentCalculator.calculate("2020-03-21 21:00", "2020-03-21 21:00", "C");
         assertEquals(0, result, 0.01);
     }
 
     @Test
     public void whenCalculateIsCalledForFamilyCWhereStartAndEndDateTimeAreAfterTheLimitDateTimeThenTotalPayIsCalculatedCorrectlyAndReturned() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-22 00:00", "2020-03-22 02:00", "C");
+        int result = paymentCalculator.calculate("2020-03-22 00:00", "2020-03-22 02:00", "C");
         assertEquals(30, result, 0.01);
     }
 
     @Test
     public void whenCalculateIsCalledForFamilyCWhereStartTimeIsEqualToLimitDateTimeAndEndDateTimeIsAfterLimitDateTimeThenTotalPayIsCalculatedCorrectlyAndReturned() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-21 21:00", "2020-03-22 04:00", "C");
+        int result = paymentCalculator.calculate("2020-03-21 21:00", "2020-03-22 04:00", "C");
         assertEquals(105, result, 0.01);
     }
 
     @Test
     public void whenCalculateIsCalledForFamilyCWhereStartTimeIsFivePMAndEndTimeIsFourAMThenTotalPayIsCalculatedCorrectlyAndReturned() throws InvalidTimeFormatException {
-        Integer result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-22 04:00", "C");
+        int result = paymentCalculator.calculate("2020-03-21 17:00", "2020-03-22 04:00", "C");
         assertEquals(189, result, 0.01);
     }
 
