@@ -21,8 +21,8 @@ public class PaymentCalculator {
     }
 
 
-    public Integer calculate(String startTime, String endTime, String family) throws InvalidTimeFormatException {
-        Integer totalPay = 0;
+    public int calculate(String startTime, String endTime, String family) throws InvalidTimeFormatException {
+        int totalPay = 0;
         if (validateTimesAndFamily(startTime, endTime, family)) {
             LocalDateTime startDateTime = DateUtil.convertStringIntoLocalDateTime(startTime);
             LocalDateTime endDateTime = DateUtil.convertStringIntoLocalDateTime(endTime);
@@ -33,8 +33,8 @@ public class PaymentCalculator {
         return totalPay;
     }
 
-    private Integer calculateTotalPay(LocalDateTime startDateTime, LocalDateTime endDateTime, String family) {
-        Integer totalPay = 0;
+    private int calculateTotalPay(LocalDateTime startDateTime, LocalDateTime endDateTime, String family) {
+        int totalPay = 0;
         if (FamilyEnum.A.toString().equals(family)) {
             LocalDate limitDate = getDayForLimitDateTime(startDateTime).toLocalDate();
             LocalTime limitTime = LocalTime.parse(FAMILY_A_ELEVEN_PM_LIMIT);
